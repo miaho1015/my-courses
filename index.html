@@ -1091,10 +1091,6 @@ function initNotesEvents() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
 
 // Init
-if (!isLocal) {
-  document.querySelector('#learning-count').closest('.stat').style.display = 'none';
-  document.querySelector('#done-count').closest('.stat').style.display = 'none';
-}
 updateStats();
 render();
 initStarEvents();
