@@ -911,7 +911,7 @@ function render() {
 
     card.innerHTML = `
       <div class="course-visual ${pc.class}">
-        ${c.img ? `<img src="課程封面/${c.img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">` : `<div class="platform-initial">${pc.initial}</div>`}
+        ${c.img ? `<img src="課程封面/${encodeURIComponent(c.img)}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">` : `<div class="platform-initial">${pc.initial}</div>`}
         <div class="platform-badge ${pc.badge}">${c.platform}</div>
         ${isLocal ? `<div class="status-badge-card ${s}">${s}</div>` : ''}
       </div>
@@ -969,7 +969,7 @@ function openModal(c) {
   const modalHeader = document.getElementById('modal-header');
   modalHeader.className = `modal-header ${pc.class}`;
   if (c.img) {
-    modalHeader.style.backgroundImage = `url('課程封面/${c.img.replace(/'/g, "\\'")}')`;
+    modalHeader.style.backgroundImage = `url('課程封面/${encodeURIComponent(c.img)}')`;
     modalHeader.style.backgroundSize = 'cover';
     modalHeader.style.backgroundPosition = 'center';
     document.getElementById('modal-header-initial').style.visibility = 'hidden';
