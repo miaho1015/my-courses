@@ -359,6 +359,7 @@
   .platform-youtube   { background: linear-gradient(135deg, #c46060 0%, #9a3f3f 100%); }
   .platform-coursera  { background: linear-gradient(135deg, #5478b8 0%, #365492 100%); }
   .platform-elsa      { background: linear-gradient(135deg, #b87a9a 0%, #8f5476 100%); }
+  .platform-kim       { background: linear-gradient(135deg, #5a6eb8 0%, #3a4d92 100%); }
   .platform-other     { background: linear-gradient(135deg, #8a9a7a 0%, #677558 100%); }
 
   .badge-hahow     { background: rgba(180,106,72,0.88); color: #fff; }
@@ -368,6 +369,7 @@
   .badge-youtube   { background: rgba(180,80,80,0.88); color: #fff; }
   .badge-coursera  { background: rgba(72,102,165,0.88); color: #fff; }
   .badge-elsa      { background: rgba(160,80,130,0.88); color: #fff; }
+  .badge-kim       { background: rgba(72,90,170,0.88); color: #fff; }
   .badge-other     { background: rgba(120,138,100,0.88); color: #fff; }
 
   /* ===== MODAL ===== */
@@ -675,6 +677,7 @@
       <button class="filter-btn" data-platform="知識衛星">知識衛星</button>
       <button class="filter-btn" data-platform="Pressplay">Pressplay</button>
       <button class="filter-btn" data-platform="艾兒莎">艾兒莎</button>
+      <button class="filter-btn" data-platform="阿金">阿金</button>
       <button class="filter-btn" data-platform="其他">其他</button>
     </div>
     <div class="filter-row">
@@ -830,6 +833,14 @@ const courses = [
   {id:116, title:"微型創業全攻略", instructor:"艾兒莎", platform:"艾兒莎", type:"商業", url:"https://elsa-campus.com"},
   {id:117, title:"七日投資理財課", instructor:"何浩瑜", platform:"艾兒莎", type:"財務", url:"https://elsa-campus.com"},
   {id:118, title:"目標管理實作班", instructor:"艾兒莎", platform:"艾兒莎", type:"效率", url:"https://elsa-campus.com"},
+  {id:119, title:"創業優化指南——創業大課", instructor:"黃晨皓 Kim", platform:"阿金", type:"商業", url:"https://kim.com.tw"},
+  {id:120, title:"人生優化指南——狀態標記課：當那些狀態來臨時，我變成了最不喜歡的自己（選修課）", instructor:"黃晨皓 Kim", platform:"阿金", type:"效率", url:"https://kim.com.tw"},
+  {id:121, title:"人生優化指南——覆盤課 2.0：登月計劃前導課", instructor:"黃晨皓 Kim", platform:"阿金", type:"效率", url:"https://kim.com.tw"},
+  {id:122, title:"人生優化指南——人生風險管理課：錢就是人，處理錢的問題就是處理自己人生的問題（選修課）", instructor:"黃晨皓 Kim", platform:"阿金", type:"財務", url:"https://kim.com.tw"},
+  {id:123, title:"工作優化指南——溝通課：還沒開口前，溝通就已經結束了", instructor:"黃晨皓 Kim", platform:"阿金", type:"溝通", url:"https://kim.com.tw"},
+  {id:124, title:"人生優化指南——火星計劃前導課：如果你不喜歡此刻，那為何要用餘生來重複？", instructor:"黃晨皓 Kim", platform:"阿金", type:"效率", url:"https://kim.com.tw"},
+  {id:125, title:"工作優化指南——做局課：讓你不再獨自拚命，而是眾人之力推動前行", instructor:"黃晨皓 Kim", platform:"阿金", type:"商業", url:"https://kim.com.tw"},
+  {id:126, title:"工作優化指南——加薪課：老闆親自解密！加薪溝通心法", instructor:"黃晨皓 Kim", platform:"阿金", type:"溝通", url:"https://kim.com.tw"},
 ];
 
 // Platform config
@@ -838,6 +849,7 @@ const platformConfig = {
   '知識衛星':  { class: 'platform-satellite',  badge: 'badge-satellite', initial: '衛' },
   'Pressplay':{ class: 'platform-pressplay',  badge: 'badge-pressplay', initial: 'P' },
   '艾兒莎':   { class: 'platform-elsa',       badge: 'badge-elsa',      initial: '艾' },
+  '阿金':     { class: 'platform-kim',        badge: 'badge-kim',       initial: '金' },
   'Udemy':    { class: 'platform-udemy',      badge: 'badge-udemy',     initial: 'U' },
   'YouTube':  { class: 'platform-youtube',    badge: 'badge-youtube',   initial: 'Y' },
   'Coursera': { class: 'platform-coursera',   badge: 'badge-coursera',  initial: 'C' },
