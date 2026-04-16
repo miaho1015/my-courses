@@ -496,6 +496,11 @@
     border-bottom-color: var(--accent);
     color: var(--text);
   }
+  .modal-instructor-input[readonly] {
+    border-bottom-color: transparent;
+    cursor: default;
+    pointer-events: none;
+  }
   .modal-instructor-saved {
     font-size: 11px;
     color: var(--text-muted);
@@ -877,6 +882,7 @@ let currentCat = '全部';
 let currentStatus = '全部';
 let currentSearch = '';
 let currentModal = null;
+const isLocal = location.protocol === 'file:';
 
 // Render
 function render() {
@@ -907,7 +913,7 @@ function render() {
       <div class="course-visual ${pc.class}">
         ${c.img ? `<img src="課程封面/${c.img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">` : `<div class="platform-initial">${pc.initial}</div>`}
         <div class="platform-badge ${pc.badge}">${c.platform}</div>
-        <div class="status-badge-card ${s}">${s}</div>
+        ${isLocal ? `<div class="status-badge-card ${s}">${s}</div>` : ''}
       </div>
       <div class="course-body">
         <div class="course-title">${c.title}</div>
@@ -915,9 +921,7 @@ function render() {
           <span class="course-instructor">${getInstructor(c.id, c.instructor) || '—'}</span>
           <span class="course-type-tag">${c.type}</span>
         </div>
-        <div class="course-progress">
-          <div class="course-progress-bar" style="width:${progress}%"></div>
-        </div>
+        ${isLocal ? `<div class="course-progress"><div class="course-progress-bar" style="width:${progress}%"></div></div>` : ''}
       </div>
     `;
 
@@ -981,22 +985,30 @@ function openModal(c) {
 
   const instrInput = document.getElementById('modal-instructor-input');
   instrInput.value = getInstructor(c.id, c.instructor);
+  instrInput.readOnly = !isLocal;
   document.getElementById('modal-instructor-saved').classList.remove('show');
+  document.getElementById('modal-instructor-saved').style.display = isLocal ? '' : 'none';
 
   const urlBtn = document.getElementById('modal-url-btn');
-  if (c.url) { urlBtn.href = c.url; urlBtn.style.display = ''; }
+  if (!isLocal && c.url) { urlBtn.href = c.url; urlBtn.style.display = ''; }
+  else if (isLocal && c.url) { urlBtn.href = c.url; urlBtn.style.display = ''; }
   else { urlBtn.style.display = 'none'; }
 
-  document.querySelectorAll('.status-select-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.s === s);
-  });
+  document.getElementById('modal-actions').style.display = isLocal ? '' : 'none';
 
-  document.getElementById('modal-rating').classList.toggle('visible', s === '已完成');
-  updateStars(getRating(c.id));
-
-  document.getElementById('modal-notes').classList.toggle('visible', s === '學習中' || s === '已完成');
-  document.getElementById('notes-textarea').value = getNotes(c.id);
-  document.getElementById('notes-saved').classList.remove('show');
+  if (isLocal) {
+    document.querySelectorAll('.status-select-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.s === s);
+    });
+    document.getElementById('modal-rating').classList.toggle('visible', s === '已完成');
+    updateStars(getRating(c.id));
+    document.getElementById('modal-notes').classList.toggle('visible', s === '學習中' || s === '已完成');
+    document.getElementById('notes-textarea').value = getNotes(c.id);
+    document.getElementById('notes-saved').classList.remove('show');
+  } else {
+    document.getElementById('modal-rating').classList.remove('visible');
+    document.getElementById('modal-notes').classList.remove('visible');
+  }
 
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1043,6 +1055,7 @@ function initInstructorEvents() {
   const input = document.getElementById('modal-instructor-input');
   const savedEl = document.getElementById('modal-instructor-saved');
   input.addEventListener('input', () => {
+    if (!isLocal) return;
     clearTimeout(_instrSaveTimer);
     _instrSaveTimer = setTimeout(() => {
       if (!currentModal) return;
@@ -1078,6 +1091,11 @@ function initNotesEvents() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
 
 // Init
+if (!isLocal) {
+  document.querySelector('.filter-row').style.display = 'none';
+  document.querySelector('#learning-count').closest('.stat').style.display = 'none';
+  document.querySelector('#done-count').closest('.stat').style.display = 'none';
+}
 updateStats();
 render();
 initStarEvents();
