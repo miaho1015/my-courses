@@ -358,6 +358,7 @@
   .platform-udemy     { background: linear-gradient(135deg, #9a72b8 0%, #735292 100%); }
   .platform-youtube   { background: linear-gradient(135deg, #c46060 0%, #9a3f3f 100%); }
   .platform-coursera  { background: linear-gradient(135deg, #5478b8 0%, #365492 100%); }
+  .platform-elsa      { background: linear-gradient(135deg, #b87a9a 0%, #8f5476 100%); }
   .platform-other     { background: linear-gradient(135deg, #8a9a7a 0%, #677558 100%); }
 
   .badge-hahow     { background: rgba(180,106,72,0.88); color: #fff; }
@@ -366,6 +367,7 @@
   .badge-udemy     { background: rgba(140,96,170,0.88); color: #fff; }
   .badge-youtube   { background: rgba(180,80,80,0.88); color: #fff; }
   .badge-coursera  { background: rgba(72,102,165,0.88); color: #fff; }
+  .badge-elsa      { background: rgba(160,80,130,0.88); color: #fff; }
   .badge-other     { background: rgba(120,138,100,0.88); color: #fff; }
 
   /* ===== MODAL ===== */
@@ -672,7 +674,7 @@
       <button class="filter-btn" data-platform="Hahow">Hahow</button>
       <button class="filter-btn" data-platform="知識衛星">知識衛星</button>
       <button class="filter-btn" data-platform="Pressplay">Pressplay</button>
-
+      <button class="filter-btn" data-platform="艾兒莎">艾兒莎</button>
       <button class="filter-btn" data-platform="其他">其他</button>
     </div>
     <div class="filter-row">
@@ -814,6 +816,21 @@ const courses = [
   {id:98, title:"Evernote，你的無壓工作術", instructor:"—", platform:"Hahow", type:"效率", url:"https://hahow.in", img:"Evernote，你的無壓工作術.avif"},
   {id:99, title:"上台惡夢變美夢：穩健台風的魅力溝通術", instructor:"—", platform:"Hahow", type:"溝通", url:"https://hahow.in", img:"上台惡夢變美夢：穩健台風的魅力溝通術.avif"},
   {id:100, title:"創業先修，你準備好了嗎？", instructor:"—", platform:"Hahow", type:"商業", url:"https://hahow.in", img:"創業先修，你準備好了嗎？.avif"},
+  {id:101, title:"財富思維建構班", instructor:"艾兒莎", platform:"艾兒莎", type:"財務", url:"https://elsacampus.com"},
+  {id:102, title:"迪士尼的商業與財報解析：艾兒莎 X 何浩瑜", instructor:"艾兒莎 X 何浩瑜", platform:"艾兒莎", type:"商業", url:"https://elsacampus.com"},
+  {id:103, title:"小紅書全面賺錢術", instructor:"艾兒莎", platform:"艾兒莎", type:"自媒體", url:"https://elsacampus.com"},
+  {id:104, title:"2023年復盤必選讀書會：4本書精讀直播課", instructor:"艾兒莎", platform:"艾兒莎", type:"效率", url:"https://elsacampus.com"},
+  {id:105, title:"『翻轉』終極目標管理術！徹底掌握全新的自由人生 GET!!!", instructor:"艾兒莎", platform:"艾兒莎", type:"效率", url:"https://elsacampus.com"},
+  {id:106, title:"艾兒莎學院：隊長募集計畫", instructor:"艾兒莎", platform:"艾兒莎", type:"商業", url:"https://elsacampus.com"},
+  {id:107, title:"直播主實戰培訓", instructor:"艾兒莎", platform:"艾兒莎", type:"自媒體", url:"https://elsacampus.com"},
+  {id:108, title:"【保證讓你寫出申請政府補助的計畫案】專業顧問姚長安"六小時"實作課程", instructor:"艾兒莎 X 姚長安", platform:"艾兒莎", type:"商業", url:"https://elsacampus.com"},
+  {id:109, title:"2024 全新制度說明會", instructor:"艾兒莎", platform:"艾兒莎", type:"商業", url:"https://elsacampus.com"},
+  {id:110, title:"艾兒莎100天陪跑班", instructor:"艾兒莎", platform:"艾兒莎", type:"效率", url:"https://elsacampus.com"},
+  {id:111, title:"2024開學典禮：一起攜手跳級人生", instructor:"艾兒莎", platform:"艾兒莎", type:"效率", url:"https://elsacampus.com"},
+  {id:112, title:"艾兒莎 X 章潔強強聯手：左右腦噴發課", instructor:"艾兒莎 X 章潔", platform:"艾兒莎", type:"商業", url:"https://elsacampus.com"},
+  {id:113, title:"超級「強運」人生攻略課", instructor:"艾兒莎", platform:"艾兒莎", type:"身心靈", url:"https://elsacampus.com"},
+  {id:114, title:"高維躍遷：跳級人生培訓專班", instructor:"艾兒莎", platform:"艾兒莎", type:"效率", url:"https://elsacampus.com"},
+  {id:115, title:"超狂時間管理術", instructor:"艾兒莎", platform:"艾兒莎", type:"效率", url:"https://elsacampus.com"},
 ];
 
 // Platform config
@@ -821,6 +838,7 @@ const platformConfig = {
   'Hahow':    { class: 'platform-hahow',     badge: 'badge-hahow',     initial: 'H' },
   '知識衛星':  { class: 'platform-satellite',  badge: 'badge-satellite', initial: '衛' },
   'Pressplay':{ class: 'platform-pressplay',  badge: 'badge-pressplay', initial: 'P' },
+  '艾兒莎':   { class: 'platform-elsa',       badge: 'badge-elsa',      initial: '艾' },
   'Udemy':    { class: 'platform-udemy',      badge: 'badge-udemy',     initial: 'U' },
   'YouTube':  { class: 'platform-youtube',    badge: 'badge-youtube',   initial: 'Y' },
   'Coursera': { class: 'platform-coursera',   badge: 'badge-coursera',  initial: 'C' },
