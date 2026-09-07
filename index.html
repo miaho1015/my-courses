@@ -183,8 +183,57 @@
   .status-btn[data-status="待學"].active { background: var(--text-muted); color: #0f0e0d; border-color: var(--text-muted); }
   .status-btn[data-status="學習中"].active { background: #6aade0; color: #0f0e0d; border-color: #6aade0; }
   .status-btn[data-status="已完成"].active { background: #6ac08a; color: #0f0e0d; border-color: #6ac08a; }
+  .status-btn[data-status="已應用"].active { background: #c8a24a; color: #0f0e0d; border-color: #c8a24a; }
+
+  .archive-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .archive-toggle input { accent-color: var(--accent); cursor: pointer; }
 
   .divider { width: 1px; height: 16px; background: var(--border); flex-shrink: 0; }
+
+  /* ===== QUEUE PANEL ===== */
+  .queue-panel {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 48px 0;
+  }
+  .queue-section-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .queue-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .queue-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px 6px 8px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+    max-width: 320px;
+  }
+  .queue-card:hover { border-color: var(--accent2); transform: translateY(-1px); }
+  .queue-card .queue-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .queue-card.learning { border-color: #6aade0; background: rgba(106,173,224,0.12); }
+  .queue-card.learning .queue-dot { background: #6aade0; }
+  .queue-card .queue-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent2); flex-shrink: 0; }
+  .queue-empty-hint { font-size: 12px; color: var(--text-muted); font-style: italic; }
+
+  .wip-limit-note { font-size: 11px; color: var(--text-muted); margin-top: -4px; margin-bottom: 16px; }
 
   /* ===== RESULT INFO ===== */
   .result-info {
@@ -292,6 +341,17 @@
   .status-badge-card.待學 { background: rgba(138,122,106,0.85); color: #fff; }
   .status-badge-card.學習中 { background: rgba(106,173,224,0.85); color: #fff; }
   .status-badge-card.已完成 { background: rgba(106,192,138,0.85); color: #fff; }
+  .status-badge-card.已應用 { background: rgba(200,162,74,0.9); color: #fff; }
+
+  .card-queue-flag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 13px;
+    z-index: 3;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+  }
+  .card-archived { opacity: 0.55; }
 
   /* Card body */
   .course-body {
@@ -360,7 +420,7 @@
   .platform-coursera  { background: linear-gradient(135deg, #5478b8 0%, #365492 100%); }
   .platform-elsa      { background: linear-gradient(135deg, #b87a9a 0%, #8f5476 100%); }
   .platform-kim       { background: linear-gradient(135deg, #5a6eb8 0%, #3a4d92 100%); }
-  .platform-other     { background: linear-gradient(135deg, #8a9a7a 0%, #677558 100%); }
+.platform-other     { background: linear-gradient(135deg, #8a9a7a 0%, #677558 100%); }
 
   .badge-hahow     { background: rgba(180,106,72,0.88); color: #fff; }
   .badge-pressplay { background: rgba(180,80,106,0.88); color: #fff; }
@@ -370,7 +430,7 @@
   .badge-coursera  { background: rgba(72,102,165,0.88); color: #fff; }
   .badge-elsa      { background: rgba(160,80,130,0.88); color: #fff; }
   .badge-kim       { background: rgba(72,90,170,0.88); color: #fff; }
-  .badge-other     { background: rgba(120,138,100,0.88); color: #fff; }
+.badge-other     { background: rgba(120,138,100,0.88); color: #fff; }
 
   /* ===== MODAL ===== */
   .modal-overlay {
@@ -606,6 +666,17 @@
   }
   .status-select-btn:hover { border-color: var(--accent); color: var(--accent); }
   .status-select-btn.active { background: var(--accent); border-color: var(--accent); color: #0f0e0d; font-weight: 500; }
+  .status-select-btn[data-s="已應用"].active { background: #c8a24a; border-color: #c8a24a; }
+
+  .modal-secondary-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .btn-queue-toggle, .btn-archive-toggle {
+    flex: 1; padding: 8px; border-radius: var(--radius);
+    font-family: inherit; font-size: 12px; cursor: pointer; transition: all 0.2s;
+    background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+  }
+  .btn-queue-toggle:hover, .btn-archive-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-queue-toggle.active { background: var(--accent-dim); border-color: var(--accent2); color: var(--accent2); font-weight: 500; }
+  .btn-archive-toggle.active { background: rgba(138,122,106,0.18); border-color: var(--text-muted); color: var(--text); font-weight: 500; }
 
   /* card stars */
   .card-stars { display: flex; gap: 1px; font-size: 10px; }
@@ -618,6 +689,93 @@
     background: var(--accent2);
     flex-shrink: 0;
   }
+
+  /* ===== MODAL EDIT/DELETE ===== */
+  .btn-modal-edit, .btn-modal-delete {
+    flex: 1; padding: 8px; border-radius: var(--radius);
+    font-family: inherit; font-size: 12px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-modal-edit {
+    background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+  }
+  .btn-modal-edit:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-modal-delete {
+    background: transparent; border: 1px solid rgba(220,38,38,0.3); color: rgba(220,38,38,0.7);
+  }
+  .btn-modal-delete:hover { background: rgba(220,38,38,0.1); border-color: #dc2626; color: #dc2626; }
+
+  /* ===== ADD BUTTON ===== */
+  .sort-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 11px;
+    padding: 4px 12px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .sort-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .sort-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+  .btn-add-course {
+    margin-left: auto;
+    padding: 8px 18px;
+    background: var(--accent);
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+  .btn-add-course:hover { opacity: 0.85; }
+
+  /* ===== ADD MODAL ===== */
+  .add-modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    z-index: 300; display: none; align-items: center; justify-content: center;
+    padding: 20px; backdrop-filter: blur(4px);
+  }
+  .add-modal-overlay.open { display: flex; }
+  .add-modal {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+    width: 100%; max-width: 440px; padding: 28px; box-shadow: var(--shadow);
+  }
+  .add-modal h3 {
+    font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400;
+    margin-bottom: 20px; color: var(--text);
+  }
+  .add-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+  .add-field label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; }
+  .add-field input, .add-field select {
+    padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
+    background: var(--bg); font-family: inherit; font-size: 13px; color: var(--text);
+    outline: none; transition: border-color 0.2s;
+  }
+  .add-field input:focus, .add-field select:focus { border-color: var(--accent); }
+  .add-modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .btn-confirm-add {
+    flex: 1; padding: 10px; background: var(--accent); border: none; border-radius: 8px;
+    color: #fff; font-family: inherit; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-confirm-add:hover { opacity: 0.85; }
+  .btn-cancel-add {
+    padding: 10px 18px; background: transparent; border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text-muted); font-family: inherit; font-size: 13px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-cancel-add:hover { border-color: var(--accent); color: var(--accent); }
 
   /* ===== SCROLLBAR ===== */
   ::-webkit-scrollbar { width: 6px; }
@@ -658,6 +816,10 @@
         <div class="stat-num" id="done-count">0</div>
         <div class="stat-label">已完成</div>
       </div>
+      <div class="stat">
+        <div class="stat-num" id="applied-count">0</div>
+        <div class="stat-label">已應用</div>
+      </div>
     </div>
   </div>
 </header>
@@ -669,6 +831,7 @@
         <span class="search-icon">🔍</span>
         <input class="search-input" id="search-input" type="text" placeholder="搜尋課程或講師…">
       </div>
+      <button class="btn-add-course" onclick="openAddModal()">＋ 新增課程</button>
     </div>
     <div class="filter-row">
       <span class="filter-label">平台</span>
@@ -676,8 +839,8 @@
       <button class="filter-btn" data-platform="Hahow">Hahow</button>
       <button class="filter-btn" data-platform="知識衛星">知識衛星</button>
       <button class="filter-btn" data-platform="Pressplay">Pressplay</button>
-      <button class="filter-btn" data-platform="艾兒莎">艾兒莎</button>
-      <button class="filter-btn" data-platform="阿金">阿金</button>
+      <button class="filter-btn" data-platform="艾兒莎">艾兒莎成長營</button>
+      <button class="filter-btn" data-platform="阿金">阿金！人生進化中</button>
       <button class="filter-btn" data-platform="其他">其他</button>
     </div>
     <div class="filter-row">
@@ -686,16 +849,90 @@
       <button class="status-btn" data-status="待學">待學</button>
       <button class="status-btn" data-status="學習中">學習中</button>
       <button class="status-btn" data-status="已完成">已完成</button>
+      <button class="status-btn" data-status="已應用">已應用</button>
+      <div class="divider"></div>
+      <label class="archive-toggle">
+        <input type="checkbox" id="show-archived-toggle">
+        顯示封存
+      </label>
     </div>
   </div>
 </div>
 
 <div class="result-info">
   <div>顯示 <span id="showing-count">0</span> 堂</div>
+  <button class="sort-btn" id="sortBtn" onclick="toggleSort()">↕ 最新優先</button>
+</div>
+
+<div class="queue-panel" id="queue-panel">
+  <div class="queue-section-title">現在進行中</div>
+  <div class="queue-row" id="learning-row"></div>
+  <div class="wip-limit-note">一次只專注一堂課，這樣比較容易真的學完、用出來</div>
+  <div class="queue-section-title">接下來候補（最多3堂）</div>
+  <div class="queue-row" id="queue-row"></div>
 </div>
 
 <div class="grid-container">
   <div class="courses-grid" id="courses-grid"></div>
+</div>
+
+<!-- ADD MODAL -->
+<div class="add-modal-overlay" id="add-modal-overlay">
+  <div class="add-modal">
+    <h3>新增課程</h3>
+    <div class="add-field">
+      <label>課程名稱 *</label>
+      <input type="text" id="add-title" placeholder="輸入課程名稱">
+    </div>
+    <div class="add-field">
+      <label>平台 *</label>
+      <select id="add-platform">
+        <option value="Hahow">Hahow</option>
+        <option value="知識衛星">知識衛星</option>
+        <option value="Pressplay">Pressplay</option>
+        <option value="艾兒莎">艾兒莎成長營</option>
+        <option value="阿金">阿金！人生進化中</option>
+        <option value="其他">其他</option>
+      </select>
+    </div>
+    <div class="add-field">
+      <label>類型</label>
+      <select id="add-type">
+        <option value="行銷">行銷</option>
+        <option value="自媒體">自媒體</option>
+        <option value="效率">效率</option>
+        <option value="財務">財務</option>
+        <option value="商業">商業</option>
+        <option value="心理">心理</option>
+        <option value="健康">健康</option>
+        <option value="設計">設計</option>
+        <option value="寫作">寫作</option>
+        <option value="語言">語言</option>
+        <option value="溝通">溝通</option>
+        <option value="身心靈">身心靈</option>
+        <option value="活動">活動</option>
+        <option value="技術">技術</option>
+        <option value="生活">生活</option>
+        <option value="其他">其他</option>
+      </select>
+    </div>
+    <div class="add-field">
+      <label>講師</label>
+      <input type="text" id="add-instructor" placeholder="講師名稱（可略）">
+    </div>
+    <div class="add-field">
+      <label>課程連結</label>
+      <input type="url" id="add-url" placeholder="https://...（可略）">
+    </div>
+    <div class="add-field">
+      <label>封面圖檔名（放在「課程封面/」資料夾）</label>
+      <input type="text" id="add-img" placeholder="例：課程名稱.jpg（可略）">
+    </div>
+    <div class="add-modal-actions">
+      <button class="btn-cancel-add" onclick="closeAddModal()">取消</button>
+      <button class="btn-confirm-add" onclick="confirmAddCourse()">新增</button>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL -->
@@ -736,6 +973,15 @@
         <button class="status-select-btn" data-s="待學" onclick="setStatus(this)">📋 待學</button>
         <button class="status-select-btn" data-s="學習中" onclick="setStatus(this)">▶ 學習中</button>
         <button class="status-select-btn" data-s="已完成" onclick="setStatus(this)">✅ 已完成</button>
+        <button class="status-select-btn" data-s="已應用" onclick="setStatus(this)">🌱 已應用</button>
+      </div>
+      <div class="modal-secondary-actions" id="modal-secondary-actions">
+        <button class="btn-queue-toggle" id="btn-queue-toggle" onclick="toggleQueue()">⭐ 加入候補</button>
+        <button class="btn-archive-toggle" id="btn-archive-toggle" onclick="toggleArchive()">📦 封存</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <button class="btn-modal-edit" onclick="openEditModal()">✎ 編輯</button>
+        <button class="btn-modal-delete" onclick="deleteCourse()">✕ 刪除</button>
       </div>
     </div>
   </div>
@@ -743,6 +989,7 @@
 
 <script>
 const courses = [
+  {id:133, title:"AI 溝通術 | 一套邏輯打通所有 AI，每週省回 15 小時", instructor:"牧羊妮", platform:"其他", type:"效率", url:"https://course.nomadni.com/courses/chatgpt", img:"AI 溝通術 | 一套邏輯打通所有 AI，每週省回 15 小時.jpg"},
   {id:13, title:"行銷設計雙重輸出！用設計腦打造一見心動的行銷美學", instructor:"Ryan Hong", platform:"Pressplay", type:"行銷", url:"https://pressplay.cc", img:"行銷設計雙重輸出！用設計腦打造一見心動的行銷美學.jpg"},
   {id:14, title:"DiSC人心洞悉術：看懂行為動機，培養人際溝通應對力", instructor:"—", platform:"Pressplay", type:"溝通", url:"https://pressplay.cc", img:"DiSC人心洞悉術：看懂行為動機，培養人際溝通應對力.jpg"},
   {id:15, title:"卡片盒筆記實戰課｜靈感捕捉到高效產出的知識管理系統", instructor:"—", platform:"Pressplay", type:"效率", url:"https://pressplay.cc", img:"卡片盒筆記實戰課｜靈感捕捉到高效產出的知識管理系統.jpg"},
@@ -856,7 +1103,7 @@ const platformConfig = {
   'Pressplay':{ class: 'platform-pressplay',  badge: 'badge-pressplay', initial: 'P' },
   '艾兒莎':   { class: 'platform-elsa',       badge: 'badge-elsa',      initial: '艾' },
   '阿金':     { class: 'platform-kim',        badge: 'badge-kim',       initial: '金' },
-  'Udemy':    { class: 'platform-udemy',      badge: 'badge-udemy',     initial: 'U' },
+'Udemy':    { class: 'platform-udemy',      badge: 'badge-udemy',     initial: 'U' },
   'YouTube':  { class: 'platform-youtube',    badge: 'badge-youtube',   initial: 'Y' },
   'Coursera': { class: 'platform-coursera',   badge: 'badge-coursera',  initial: 'C' },
 };
@@ -895,6 +1142,37 @@ function getInstructor(id, fallback) {
   return (fallback && fallback !== '—') ? fallback : '';
 }
 
+// ===== ACTION-FIRST SYSTEM: WIP limit / 候補 / 封存 =====
+const WIP_LIMIT = 1;      // 同時間最多幾堂「學習中」
+const QUEUE_LIMIT = 3;    // 候補佇列最多幾堂
+
+function getQueued(id) {
+  const e = statusMap[id];
+  return !!(e && typeof e === 'object' && e.queued);
+}
+function getArchived(id) {
+  const e = statusMap[id];
+  return !!(e && typeof e === 'object' && e.archived);
+}
+function countLearning(excludeId) {
+  return courses.filter(c => c.id !== excludeId && getStatus(c.id) === '學習中').length;
+}
+function countQueued(excludeId) {
+  return courses.filter(c => c.id !== excludeId && getQueued(c.id)).length;
+}
+function setQueued(id, val) {
+  const prev = statusMap[id];
+  const prevData = (typeof prev === 'object' && prev) ? prev : { status: typeof prev === 'string' ? prev : '待學' };
+  statusMap[id] = { ...prevData, queued: val };
+  storageSet(statusMap);
+}
+function setArchived(id, val) {
+  const prev = statusMap[id];
+  const prevData = (typeof prev === 'object' && prev) ? prev : { status: typeof prev === 'string' ? prev : '待學' };
+  statusMap[id] = { ...prevData, archived: val };
+  storageSet(statusMap);
+}
+
 function saveInstructor(id, name) {
   const prev = statusMap[id];
   const prevData = (typeof prev === 'object' && prev) ? prev : { status: typeof prev === 'string' ? prev : '待學' };
@@ -916,7 +1194,9 @@ function saveStatus(id, s) {
 let currentCat = '全部';
 let currentStatus = '全部';
 let currentSearch = '';
+let currentSort = 'newest'; // 'newest' | 'oldest'
 let currentModal = null;
+let showArchived = false;
 const isLocal = location.protocol === 'file:';
 
 // Render
@@ -924,13 +1204,18 @@ function render() {
   const grid = document.getElementById('courses-grid');
   const filtered = courses.filter(c => {
     const s = getStatus(c.id);
-    const matchPlatform = currentCat === '全部' || c.platform === currentCat;
+    const mainPlatforms = ['Hahow','知識衛星','Pressplay','艾兒莎','阿金'];
+    const matchPlatform = currentCat === '全部' ||
+      (currentCat === '其他' ? !mainPlatforms.includes(c.platform) : c.platform === currentCat);
     const matchStatus = currentStatus === '全部' || s === currentStatus;
     const q = currentSearch.toLowerCase();
     const instrName = getInstructor(c.id, c.instructor).toLowerCase();
     const matchSearch = !q || c.title.toLowerCase().includes(q) || instrName.includes(q);
-    return matchPlatform && matchStatus && matchSearch;
+    const matchArchive = showArchived || !getArchived(c.id);
+    return matchPlatform && matchStatus && matchSearch && matchArchive;
   });
+
+  filtered.sort((a, b) => currentSort === 'newest' ? b.id - a.id : a.id - b.id);
 
   document.getElementById('showing-count').textContent = filtered.length;
   grid.innerHTML = '';
@@ -939,15 +1224,16 @@ function render() {
     const s = getStatus(c.id);
     const pc = getPlatformConfig(c.platform);
     const card = document.createElement('div');
-    card.className = 'course-card';
+    card.className = 'course-card' + (getArchived(c.id) ? ' card-archived' : '');
     card.style.animationDelay = `${Math.min(i * 0.04, 0.5)}s`;
 
-    const progress = s === '已完成' ? 100 : s === '學習中' ? 45 : 0;
+    const progress = (s === '已完成' || s === '已應用') ? 100 : s === '學習中' ? 45 : 0;
 
     card.innerHTML = `
       <div class="course-visual ${pc.class}">
         ${c.img ? `<img src="課程封面/${c.img.split('/').map(encodeURIComponent).join('/')}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">` : `<div class="platform-initial">${pc.initial}</div>`}
         <div class="platform-badge ${pc.badge}">${c.platform}</div>
+        ${isLocal && getQueued(c.id) ? `<div class="card-queue-flag">⭐</div>` : ''}
         ${isLocal ? `<div class="status-badge-card ${s}">${s}</div>` : ''}
       </div>
       <div class="course-body">
@@ -963,12 +1249,47 @@ function render() {
     card.addEventListener('click', () => openModal(c));
     grid.appendChild(card);
   });
+
+  renderQueuePanel();
+}
+
+// ===== QUEUE PANEL =====
+function renderQueuePanel() {
+  const panel = document.getElementById('queue-panel');
+  if (!isLocal) { panel.style.display = 'none'; return; }
+
+  const learningRow = document.getElementById('learning-row');
+  const queueRow = document.getElementById('queue-row');
+  const learningCourses = courses.filter(c => getStatus(c.id) === '學習中');
+  const queuedCourses = courses.filter(c => getQueued(c.id) && getStatus(c.id) !== '學習中');
+
+  learningRow.innerHTML = learningCourses.length
+    ? learningCourses.map(c => `
+        <div class="queue-card learning" onclick='openModalById(${c.id})'>
+          <span class="queue-dot"></span>
+          <span class="queue-title">${c.title}</span>
+        </div>`).join('')
+    : `<div class="queue-empty-hint">目前沒有正在進行的課程——挑一堂開始吧</div>`;
+
+  queueRow.innerHTML = queuedCourses.length
+    ? queuedCourses.map(c => `
+        <div class="queue-card" onclick='openModalById(${c.id})'>
+          <span class="queue-dot"></span>
+          <span class="queue-title">${c.title}</span>
+        </div>`).join('')
+    : `<div class="queue-empty-hint">還沒有候補課程，在課程卡片點「⭐ 加入候補」預排下一堂</div>`;
+}
+
+function openModalById(id) {
+  const c = courses.find(x => x.id === id);
+  if (c) openModal(c);
 }
 
 function updateStats() {
   document.getElementById('total-count').textContent = courses.length;
   document.getElementById('learning-count').textContent = courses.filter(c => getStatus(c.id) === '學習中').length;
   document.getElementById('done-count').textContent = courses.filter(c => getStatus(c.id) === '已完成').length;
+  document.getElementById('applied-count').textContent = courses.filter(c => getStatus(c.id) === '已應用').length;
 }
 
 // Filters
@@ -992,6 +1313,11 @@ document.querySelectorAll('.status-btn').forEach(btn => {
 
 document.getElementById('search-input').addEventListener('input', e => {
   currentSearch = e.target.value;
+  render();
+});
+
+document.getElementById('show-archived-toggle').addEventListener('change', e => {
+  showArchived = e.target.checked;
   render();
 });
 
@@ -1035,14 +1361,23 @@ function openModal(c) {
     document.querySelectorAll('.status-select-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.s === s);
     });
-    document.getElementById('modal-rating').classList.toggle('visible', s === '已完成');
+    document.getElementById('modal-rating').classList.toggle('visible', s === '已完成' || s === '已應用');
     updateStars(getRating(c.id));
-    document.getElementById('modal-notes').classList.toggle('visible', s === '學習中' || s === '已完成');
+    document.getElementById('modal-notes').classList.toggle('visible', s === '學習中' || s === '已完成' || s === '已應用');
     document.getElementById('notes-textarea').value = getNotes(c.id);
+    document.getElementById('notes-textarea').placeholder = s === '已應用' || s === '已完成'
+      ? '寫下學習心得，以及你具體怎麼把這堂課的內容應用出來…'
+      : '寫下學習心得、重點摘要或行動計畫…';
     document.getElementById('notes-saved').classList.remove('show');
+    document.getElementById('modal-secondary-actions').style.display = '';
+    document.getElementById('btn-queue-toggle').classList.toggle('active', getQueued(c.id));
+    document.getElementById('btn-queue-toggle').textContent = getQueued(c.id) ? '⭐ 已在候補中' : '⭐ 加入候補';
+    document.getElementById('btn-archive-toggle').classList.toggle('active', getArchived(c.id));
+    document.getElementById('btn-archive-toggle').textContent = getArchived(c.id) ? '📦 取消封存' : '📦 封存';
   } else {
     document.getElementById('modal-rating').classList.remove('visible');
     document.getElementById('modal-notes').classList.remove('visible');
+    document.getElementById('modal-secondary-actions').style.display = 'none';
   }
 
   document.getElementById('modal-overlay').classList.add('open');
@@ -1055,8 +1390,54 @@ function closeModalBtn() { document.getElementById('modal-overlay').classList.re
 function setStatus(btn) {
   if (!currentModal) return;
   const s = btn.dataset.s;
-  saveStatus(currentModal.id, s);
+  const id = currentModal.id;
+
+  if (s === '學習中') {
+    const others = countLearning(id);
+    if (others >= WIP_LIMIT) {
+      const learningTitles = courses.filter(c => c.id !== id && getStatus(c.id) === '學習中').map(c => c.title).join('、');
+      const ok = confirm(`你目前正在學習「${learningTitles}」。\n\n這個帳號的設計是希望你一次只專注一堂課，比較容易真的學完、用出來。\n\n要把原本那堂退回「待學」，改成專心上這堂嗎？`);
+      if (!ok) return;
+      courses.filter(c => c.id !== id && getStatus(c.id) === '學習中').forEach(c => saveStatus(c.id, '待學'));
+    }
+  }
+
+  if (s === '已應用') {
+    const note = document.getElementById('notes-textarea').value.trim();
+    if (!note) {
+      alert('標記「已應用」之前，先寫一句你具體怎麼把這堂課的內容用出來——哪怕只是一篇IG貼文草稿的想法也算。');
+      document.getElementById('notes-textarea').focus();
+      return;
+    }
+  }
+
+  saveStatus(id, s);
+  // 完成或應用後自動從候補移除
+  if (s === '已完成' || s === '已應用') setQueued(id, false);
   document.querySelectorAll('.status-select-btn').forEach(b => b.classList.toggle('active', b.dataset.s === s));
+  render();
+  openModal(currentModal);
+}
+
+function toggleQueue() {
+  if (!currentModal) return;
+  const id = currentModal.id;
+  const isQueued = getQueued(id);
+  if (!isQueued) {
+    if (countQueued(id) >= QUEUE_LIMIT) {
+      alert(`候補佇列最多只能排 ${QUEUE_LIMIT} 堂，先移除一堂候補課程，或直接開始上其中一堂吧。`);
+      return;
+    }
+  }
+  setQueued(id, !isQueued);
+  render();
+  openModal(currentModal);
+}
+
+function toggleArchive() {
+  if (!currentModal) return;
+  const id = currentModal.id;
+  setArchived(id, !getArchived(id));
   render();
   openModal(currentModal);
 }
@@ -1122,8 +1503,141 @@ function initNotesEvents() {
   });
 }
 
+// ===== SORT =====
+function toggleSort() {
+  currentSort = currentSort === 'newest' ? 'oldest' : 'newest';
+  const btn = document.getElementById('sortBtn');
+  btn.textContent = currentSort === 'newest' ? '🕐 最新優先' : '🕐 最早優先';
+  btn.classList.toggle('active', currentSort === 'oldest');
+  render();
+}
+
+// ===== ADD COURSE =====
+const CUSTOM_KEY = 'mia_courses_custom';
+function getCustomCourses() {
+  try { return JSON.parse(localStorage.getItem(CUSTOM_KEY) || '[]'); } catch { return []; }
+}
+function saveCustomCourses(arr) {
+  try { localStorage.setItem(CUSTOM_KEY, JSON.stringify(arr)); } catch(e) {}
+}
+
+// 合併自訂課程到 courses 陣列
+(function loadCustom() {
+  getCustomCourses().forEach(c => { if (!courses.find(x => x.id === c.id)) courses.push(c); });
+})();
+
+function openAddModal() {
+  editingId = null;
+  document.getElementById('add-title').value = '';
+  document.getElementById('add-platform').value = 'Hahow';
+  document.getElementById('add-type').value = '行銷';
+  document.getElementById('add-instructor').value = '';
+  document.getElementById('add-url').value = '';
+  document.getElementById('add-img').value = '';
+  document.querySelector('.add-modal h3').textContent = '新增課程';
+  document.querySelector('.btn-confirm-add').textContent = '新增';
+  document.getElementById('add-modal-overlay').classList.add('open');
+}
+function closeAddModal() {
+  document.getElementById('add-modal-overlay').classList.remove('open');
+  editingId = null;
+}
+function closeAddModal() {
+  document.getElementById('add-modal-overlay').classList.remove('open');
+}
+let editingId = null; // null = 新增, number = 編輯
+
+function confirmAddCourse() {
+  const title = document.getElementById('add-title').value.trim();
+  if (!title) { document.getElementById('add-title').focus(); return; }
+
+  if (editingId !== null) {
+    // ===== 編輯模式 =====
+    const idx = courses.findIndex(c => c.id === editingId);
+    if (idx !== -1) {
+      courses[idx] = {
+        ...courses[idx],
+        title,
+        platform: document.getElementById('add-platform').value,
+        type: document.getElementById('add-type').value,
+        instructor: document.getElementById('add-instructor').value.trim() || '—',
+        url: document.getElementById('add-url').value.trim() || '',
+        img: document.getElementById('add-img').value.trim() || '',
+      };
+    }
+    // 同步更新 custom 存儲
+    const customs = getCustomCourses();
+    const ci = customs.findIndex(c => c.id === editingId);
+    if (ci !== -1) { customs[ci] = courses[idx]; saveCustomCourses(customs); }
+    else {
+      // 硬編碼課程：將編輯存到 statusMap 的額外欄位
+      const prev = statusMap[editingId] || {};
+      statusMap[editingId] = { ...prev, _edit: { title, platform: courses[idx].platform, type: courses[idx].type, instructor: courses[idx].instructor, url: courses[idx].url, img: courses[idx].img } };
+      storageSet(statusMap);
+    }
+    editingId = null;
+  } else {
+    // ===== 新增模式 =====
+    const newCourse = {
+      id: Date.now(),
+      title,
+      platform: document.getElementById('add-platform').value,
+      type: document.getElementById('add-type').value,
+      instructor: document.getElementById('add-instructor').value.trim() || '—',
+      url: document.getElementById('add-url').value.trim() || '',
+      img: document.getElementById('add-img').value.trim() || '',
+    };
+    courses.unshift(newCourse);
+    const customs = getCustomCourses();
+    customs.unshift(newCourse);
+    saveCustomCourses(customs);
+  }
+
+  closeAddModal();
+  updateStats();
+  render();
+}
+
+function openEditModal() {
+  if (!currentModal) return;
+  editingId = currentModal.id;
+  const c = currentModal;
+  document.getElementById('add-title').value = c.title;
+  document.getElementById('add-platform').value = c.platform;
+  document.getElementById('add-type').value = c.type;
+  document.getElementById('add-instructor').value = c.instructor === '—' ? '' : (c.instructor || '');
+  document.getElementById('add-url').value = c.url || '';
+  document.getElementById('add-img').value = c.img || '';
+  document.querySelector('.add-modal h3').textContent = '編輯課程';
+  document.querySelector('.btn-confirm-add').textContent = '儲存';
+  closeModalBtn();
+  document.getElementById('add-modal-overlay').classList.add('open');
+}
+
+function deleteCourse() {
+  if (!currentModal) return;
+  if (!confirm(`確定刪除「${currentModal.title}」？`)) return;
+  const id = currentModal.id;
+  const idx = courses.findIndex(c => c.id === id);
+  if (idx !== -1) courses.splice(idx, 1);
+  // custom 課程直接從 localStorage 移除
+  const customs = getCustomCourses().filter(c => c.id !== id);
+  saveCustomCourses(customs);
+  // 硬編碼課程：記錄到 deleted 清單
+  try {
+    const deleted = JSON.parse(localStorage.getItem('mia_courses_deleted') || '[]');
+    if (!deleted.includes(id)) { deleted.push(id); localStorage.setItem('mia_courses_deleted', JSON.stringify(deleted)); }
+  } catch(e) {}
+  closeModalBtn();
+  currentModal = null;
+  updateStats();
+  render();
+}
+
 // ESC
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModalBtn(); closeAddModal(); }
+});
 
 // Init
 updateStats();
